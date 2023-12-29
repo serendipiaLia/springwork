@@ -1,0 +1,6 @@
+@charset "UTF-8";
+/* index.jsp와 연결 */
+
+#content{width: 100%; margin 0 auto;}
+h2{color: lightpink; text-align:center;}
+#main-pic{text-align:center;}

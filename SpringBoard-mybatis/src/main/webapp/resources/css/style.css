@@ -1,0 +1,22 @@
+@charset "UTF-8";
+
+/* 공통 스타일 */
+*{margin: 0 auto; width:100%}
+
+/* index.jsp */
+#index_h1{color: forestgreen; text-align: center; font-size:4vw;}
+#main_img{display: flex; align-items: center; width: 40vw;}
+#index_menu{text-align: center; 
+			margin: 30px; 
+			display:flex; 
+			flex-direction: row; 
+			justify-content: center;
+			}
+#index_menu h3{font-size:2vw;}
+
+
+/* main.jsp >> 로그인 후, 내 정보 수정 및 로그아웃 */
+#main_h1{text-align: center; color: forestgreen;}
+#main_h1 span{color: black;}
+#main_h3{width: 40vw; display:flex; }
+#main_h3 button{width: 100px; height: 30px; padding:0;}

@@ -1,0 +1,15 @@
+@charset "UTF-8";
+/* index.jsp와 연결 */
+
+#content{width: 100%; margin: 0 auto;}
+a{text-decoration:none; color:cornflowerblue;}
+
+h2{color: lightpink; text-align:center;}
+#main-pic{text-align:center; }
+
+/* menu */
+#menu{text-align:center; margin: 20px 10px 10px 10px;}
+#menu a{color: darkgray; text-decoration:none;}
+
+/* write.jsp */
+.writeForm{width:100%; margin:0 auto; display:flex; justify-content: center;}
