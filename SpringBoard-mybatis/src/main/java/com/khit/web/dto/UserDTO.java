@@ -8,7 +8,7 @@ import lombok.Data;
 public class UserDTO {
 	
 	//ÇÊµå
-	private Long id;
+	private Long id; 
 	private String userId;
 	private String userPasswd;
 	private String userName;

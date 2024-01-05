@@ -1,22 +1,52 @@
 @charset "UTF-8";
 
 /* 공통 스타일 */
-*{margin: 0 auto; width:100%}
+*{margin: 0 auto; width:100%; text-decoration:none; list-style:none;}
+
+/* header.jsp */
+#logo{width: 100%; text-align:center; }
+#logo h1 a{text-decoration:none; color: forestgreen;}
+
+.header_menu{text-align:left; margin-bottom: 30px;}
+.header_menu ul{display:flex; }
 
 /* index.jsp */
-#index_h1{color: forestgreen; text-align: center; font-size:4vw;}
-#main_img{display: flex; align-items: center; width: 40vw;}
-#index_menu{text-align: center; 
-			margin: 30px; 
-			display:flex; 
-			flex-direction: row; 
-			justify-content: center;
-			}
-#index_menu h3{font-size:2vw;}
+#index_container{width:50%}
+/* #index_container .main_img{} */
 
 
-/* main.jsp >> 로그인 후, 내 정보 수정 및 로그아웃 */
-#main_h1{text-align: center; color: forestgreen;}
-#main_h1 span{color: black;}
-#main_h3{width: 40vw; display:flex; }
-#main_h3 button{width: 100px; height: 30px; padding:0;}
+/*============================================================
+	boardlist.jsp 
+===============================================---=========*/
+#content{width: 60%;}
+
+#content .boardlist{border: 1px solid black;   border-collapse: collapse; }
+#content .boardlist td{padding:0; width:180vw; border: 1px solid forestgreen; }
+
+#content .boardlist .boardlist_title{text-align:center; font-weight: bolder;}
+
+#content .boardlist .boardlist_content td{padding: 5px;}
+
+
+/*============================================================
+	(board)detail.jsp 
+===============================================---=========*/
+
+.board_detail .B_detail_date{display:flex;}
+
+
+/* reply 댓글부분 */
+.reply span{font-size:small; color: gray;}
+
+
+/*============================================================
+	userlist.jsp >> 회원 목록
+===============================================---=========*/
+#content .userlistForm{border: 1px solid forestgreen;   border-collapse: collapse;}
+#content .userlistForm tr{padding:0;  border: 1px solid forestgreen; }
+#content .userlistForm th{padding:0;  border: 1px solid forestgreen; }
+#content .userlistForm td{width:180vw; border: 1px solid forestgreen; }
+
+
+
+

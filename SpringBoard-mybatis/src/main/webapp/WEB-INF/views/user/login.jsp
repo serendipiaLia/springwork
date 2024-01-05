@@ -7,6 +7,7 @@
 <title>로그인</title>
 </head>
 <body>
+	<jsp:include page="../layout/header.jsp"/>
 	<div id="content">
 		<h2>Login</h2>
 		<form action="/user/login" method="post">
@@ -32,5 +33,6 @@
 		</table>
 		</form>
 	</div>
+	<jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>

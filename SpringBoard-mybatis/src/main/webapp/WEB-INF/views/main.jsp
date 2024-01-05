@@ -9,11 +9,12 @@
 </head>
 <!-- 로그인 성공시 접속되는 화면!  -->
 <body>
+	<jsp:include page="layout/header.jsp"/>
 	<h1 id="main_h1">Welcome! <span>${sessionId }</span> :D</h1>
 	<h3 id="main_h3">
 		<button onclick = "update()">My info.Edit</button>
 		<button onclick = "logout()">Logout</button>
-		<button onclick = "goindex()">Main</button>
+		<a href="/"> <button>Home</button></a>
 	</h3>
 	
 	<script>
@@ -23,9 +24,7 @@
 		const update = () => {
 			location.href = "/user/update";
 		}
-		const goindex = () => {
-			location.href = "/";
-		}
 	</script>
+	<jsp:include page="layout/footer.jsp"/>
 </body>
 </html>

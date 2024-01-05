@@ -34,4 +34,31 @@ public class UserServiceImpl implements UserService{
 		return userMapper.login(userDTO);
 	}
 	
+	// 회원 정보 수정
+	@Override
+	public UserDTO findByUserId(String userId) {
+		return userMapper.findByUserId(userId);
+	}
+	// 회원 정보 수정 처리
+	@Override
+	public void update(UserDTO userDTO) {
+		userMapper.update(userDTO);
+	}
+	// 회원 삭제
+	@Override
+	public void delete(Long id) {
+		userMapper.delete(id);
+	}
+	// 아이디 중복검사
+	@Override
+	public String checkUserId(String userId) {
+		UserDTO user = userMapper.findByUserId(userId);
+		if(user == null) { // DB에 저장된 객체가 없으면(=userId에 저장된 객체)
+			return "usable"; // 사용
+		}else {
+			return "not_usable";
+		}
+		
+	}
+	
 }

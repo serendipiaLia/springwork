@@ -9,9 +9,9 @@ public class BoardDTO {
 
 	private Long id;
 	private String boardTitle;
-	private String boardWriter;
+	private String userId; // boardWriter ´ë½Å.. 
 	private String boardContent;
-	private int hit;
+	private Integer hit;
 	private Timestamp createdTime;
 	private Timestamp updatedTime;
 }

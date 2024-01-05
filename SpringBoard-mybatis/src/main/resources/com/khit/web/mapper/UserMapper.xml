@@ -24,5 +24,19 @@
  		select * from users where userid = #{userId} and userPasswd = #{userPasswd}
  	</select>
  	
+ 	<!-- 회원 정보 수정 -->
+ 	<select id="findByUserId" resultType="com.khit.web.dto.UserDTO">
+ 		select * from users where userid = #{userId}
+ 	</select>
+ 	
+ 	<!-- 회원 정보 수정 처리  // void라 반환값이 없으므로 resultType 안해두됨 -->
+ 	<update id="update">
+ 		update users set userpasswd = #{userPasswd}, username = #{userName}, userage = #{userAge} where id = #{ id }
+ 	</update>
+ 	
+ 	<!-- 회원정보 삭제 >> userlist.jsp -->
+ 	<delete id="delete">
+ 		delete from users where id = #{id}
+ 	</delete>
  </mapper>
  

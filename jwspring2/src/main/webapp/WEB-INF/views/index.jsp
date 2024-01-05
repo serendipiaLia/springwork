@@ -10,8 +10,13 @@
 <body>
 	<div id="content">
 		<h2>KH-IT Home</h2>
-		<div id="main-pic">
+		
+		<div class="main-pic">
 			<img alt="flower.." src="/resources/images/flower.jpeg" >
+		</div>
+		
+		<div class="file-btn">
+			<a href="/file/upload">[파일 첨부]</a>
 		</div>
 	</div>
 </body>

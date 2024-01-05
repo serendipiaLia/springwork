@@ -1,6 +1,16 @@
 @charset "UTF-8";
 /* index.jsp와 연결 */
+*{margin: 0 auto;}
 
-#content{width: 100%; margin 0 auto;}
-h2{color: lightpink; text-align:center;}
-#main-pic{text-align:center;}
+#content{width: 100%;}
+#content h2{font-size:4vw; color: lightpink; text-align:center; padding: 20px;}
+.main-pic{width: 80vw; height:50vw; display:flex; justify-content: center;}
+
+#content .file-btn{display:flex; padding: 20px;}
+#content a{color: forestgreen; font-weight:bolder; font-size:2vw;}
+
+/* uploadform.jsp */
+
+
+
+

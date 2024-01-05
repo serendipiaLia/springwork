@@ -7,6 +7,7 @@
 <title>회원상세보기</title>
 </head>
 <body>
+	<jsp:include page="../layout/header.jsp"/>
 	<div id="content">
 		<h2>Our User..</h2>
 		<table class="userdetail">
@@ -41,6 +42,7 @@
 			</tr>
 		</table>
 	</div>
+	<jsp:include page="../layout/footer.jsp"/>
 	<script>
 		const list = function(){
 			location.href = "/user/";
