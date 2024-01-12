@@ -1,109 +1,181 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-        <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@page import="java.util.Date"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>글 상세보기</title>
-
+<title>KHIT | BOARD DETAIL</title>
+<link rel="stylesheet" href="../resources/css/style.css">
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+<script src="https://kit.fontawesome.com/aa24b12773.js" crossorigin="anonymous"></script>
 </head>
 <body>
-	<jsp:include page="../layout/header.jsp"/>
+<jsp:include page="../layout/header.jsp"/>
 	<div id="content">
-		<h2>POST!</h2>
-		<table class="board_detail">
-			<tr>
-				<td>
-					<input type="text" name="boardTitle" value="${board.boardTitle }" readonly>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<input type="text" name="userId" value="${board.userId }" readonly>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					<textarea rows="5" cols="60" name="board" readonly>${board.boardContent }</textarea>
-				</td>
-			</tr>
-			<tr>
-				<td>Hit : ${board.hit }</td>
-			</tr>
-			<tr class="B_detail_date">
-				<!-- 수정일이 있는 경우 수정일 표시, 없는 경우 작성일만 표시 -->
-				<c:choose > 
-					<c:when test="${not empty board.updatedTime }"> <!-- 수정일이ㅣ 있으면  -->
-					 	Modified date : <fmt:formatDate value="${board.updatedTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
-					</c:when>
-					<c:otherwise>
-						Date created : <fmt:formatDate value="${board.createdTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
-					</c:otherwise>
-				</c:choose>
-			</tr>
-			<tr class="B_detail_btn">
-				<td>
-					<!-- 세션 적용 : 로그인 한 사용자만 수정 및 삭제 보임! ${board.id} -->
-					<c:if test="${board.userId eq sessionId}">
-						<a href="/board/update?id=${board.id }"><button>Edit</button></a>
-						<a href="/board/delete?id=${board.id }" onclick="return confirm('정말 삭제하시겠습니까?')"><button>Delete</button></a>
-					</c:if>
-						<a href="/board/paging?page=${page}"><button>Posts..</button></a>
-				</td>
-			</tr>
-		</table>
-		<!-- 댓글 목록 -->
-		<c:forEach items="${replyList }" var="reply">
-			<div class="reply">
-				<p>${reply.replyContent }</p>
-				<p>
-					<b>${reply.replyer }</b> <span>(작성일 : ${reply.createdTime } )</span>
-				</p>
-			</div>
-		</c:forEach>
-		
-		<c:choose>
-			<c:when test="${not empty sessionId}">
-				<!-- 로그인 한 사용자만 댓글 등록 -->
-				<form action="/reply/insert" method="post" name="replyform">
-		 			<input type="hidden" name="boardId" value="${board.id }">
-					<p><input type="text" name="replyer" value="${sessionId }"></p>
-					<p>
-						<textarea rows="3" cols="50" name="replyContent" id="replyContent" placeholder="add your comments..."></textarea>
-					</p>
-					<button type="button" onclick="checkReply()">comment!</button>
-					
-				</form>
-			</c:when>
-			<c:otherwise>
-				<!-- 댓글 등록 시, 로그인 화면으로 이동 -->
-				<div class="replylogin">
-					<a href="/user/login">
-						[ 로그인한 사용자만 댓글 등록 가능합니다. ]
-					</a>
+		<h1><a href="/">KHIT EX.MYBATIS</a></h1>
+		<div id="boarddetail">
+			<h4>Detail</h4>
+			<table id="boarddetail_tbl">
+				<tr>
+					<td class="boarddetail_blk">
+						${board.boardTitle}
+					</td>
+				</tr>
+				<tr>
+					<td class="boarddetail_blk">
+						${board.userId}
+					</td>
+				</tr>
+				<tr>
+					<td class="boarddetail_blk">
+						<fmt:formatDate pattern="yyyy-MM-dd aa hh:mm" value="${board.createdTime}"/>
+						&nbsp;&nbsp;
+						조회수 ${board.hit}
+					</td>
+				</tr>
+				<tr>
+					<td class="boarddetail_blk">
+						${board.boardContent}
+					</td>
+				</tr>
+				<c:if test="${not empty board.updatedTime}">
+					<tr>
+						<td class="boarddetail_blk">
+							<c:set var="update_time" value="${(now.time - board.updatedTime.time) / 1000}" />
+							<c:choose>
+					            <c:when test="${update_time < 60}">
+					                <fmt:formatNumber pattern="##" value="${update_time}" />초 전 수정
+					            </c:when>
+					            <c:when test="${update_time < 3600}">
+					                <fmt:formatNumber pattern="##" value="${update_time / 60}" />분 전 수정
+					            </c:when>
+					            <c:when test="${update_time < 86400}">
+					                <fmt:formatNumber pattern="##" value="${update_time / 3600}" />시간 전 수정
+					            </c:when>
+					        </c:choose>
+						</td>
+					</tr>
+				</c:if>
+				<tr>
+					<td colspan="2">
+						<div id="boarddetail_menu">
+							<a href="/board/paging?page=${page}"><button class="boarddetail_btn">목록</button></a>
+							<c:if test="${board.userId eq sessionId}">
+								<a href="/board/update?id=${board.id}"><button class="boarddetail_btn">수정</button></a>
+								<a href="/board/delete?id=${board.id}" onclick="alert('정말로 삭제하시겠습니까?')"><button class="boarddetail_btn">삭제</button></a>
+							</c:if>
+						</div>
+					</td>
+				</tr>
+			</table>
+			
+			<!-- 댓글 -->
+			<div id="reply">
+				<h5 id="reply_word">댓글</h5>
+				
+				<!-- 댓글 목록 -->
+				<div id="reply_list">
+					<c:forEach items="${replyList}" var="reply">
+						<h5 id="reply_word2">${reply.replyer}</h5>
+						<p>${reply.replyContent}</p>
+						<p id="reply_date">
+							<fmt:formatDate pattern="yyyy-MM-dd aa hh:mm" value="${reply.createdTime}" />&nbsp;&nbsp;&nbsp;
+							<c:if test="${not empty reply.updatedTime}">
+								<span class="boarddetail_blk" style="float: right;">
+									<c:set var="update_time" value="${(now.time - reply.updatedTime.time) / 1000}" />
+									<c:choose>
+							            <c:when test="${update_time < 60}">
+							                <fmt:formatNumber pattern="##" value="${update_time}" />초 전 수정
+							            </c:when>
+							            <c:when test="${update_time < 3600}">
+							                <fmt:formatNumber pattern="##" value="${update_time / 60}" />분 전 수정
+							            </c:when>
+							            <c:when test="${update_time < 86400}">
+							                <fmt:formatNumber pattern="##" value="${update_time / 3600}" />시간 전 수정
+							            </c:when>
+							        </c:choose>
+						       	</span>
+							</c:if>
+						</p>
+						<p id="reply_menu">
+							<a href="/reply/update?boardId=${board.id}&id=${reply.id}">수정</a> |
+							<a href="/reply/delete?boardId=${board.id}&id=${reply.id}" 
+								onclick="return confirm('정말로 삭제하시겠습니까?')">삭제</a>
+						</p>
+					</c:forEach>
 				</div>
-			</c:otherwise>
-		</c:choose>
+				<c:choose>
+					<c:when test="${not empty sessionId}">
+						<!-- 댓글 등록 -->
+						<input type="hidden" id="boardId" name="boardId" value="${board.id}">
+						<div id="reply_blk">
+							<input type="text" id="replyer" name="replyer" class="reply_area" value="${sessionId}" readonly>
+							<textarea rows="2" cols="50"  id="replyContent" name="replyContent" placeholder="댓글을 작성해주세요." class="reply_area" ></textarea>
+							<button type="submit" class="reply_btn" onclick="replyInsert()">등록</button>
+						</div>
+					</c:when>
+					<c:when test="${empty sessionId}">
+						<div id="reply_login">
+							<a href="/user/login">
+								<i class="fa-regular fa-user" style="color: #919191;"></i>
+								&nbsp;&nbsp;로그인한 사용자만 댓글 작성이 가능합니다.
+							</a>
+						</div>
+					</c:when>
+				</c:choose>
+			</div> <!-- 댓글 -->
+		</div>
 	</div>
-	<jsp:include page="../layout/footer.jsp"/>
 	
-<script>
-	const checkReply = () => {
-// 		alert("댓글 등록");
-		// 댓글 등록이 비어있으면 "댓글을 입력해주세요"
-		// 댓글 내용이 있으면 서버에 전송
-		let content = document.getElementById("replyContent");
-		
-		if(content.value == ""){
-			alert("댓글을 입력해 주세요");
-			content.focus();
-			return false;
-		}else{
-			document.replyform.submit();
+	<script>
+		const replyInsert = function() {
+			// alert("댓글 등록");
+			// 댓글 등록이 비어있으면 "댓글을 입력해주세요"
+			// 댓글 내용이 있으면 서버에 전송
+			let boardId = "${board.id}";
+			let replyer = document.getElementById("replyer").value;
+			let content = document.getElementById("replyContent").value;
+			
+			if(content == ""){
+				alert("댓글을 입력해주세요.");
+				document.getElementById("content").focus();
+				return false;
+			}
+			
+			// ajax 구현
+			$.ajax({
+				// 요청 방식 : POST, 요청 주소 : /reply/insert
+				type : "POST",
+				url : "/reply/insert",
+				data : {
+					boardId : boardId,
+					replyer : replyer,
+					replyContent : content
+				},
+				success : function(replyList){
+					console.log("댓글 등록 성공");
+					console.log(replyList);
+					// 댓글 목록
+					let output = "";
+					for(let i in replyList){
+						output += "<div class='reply'>";
+						output += "<p>" + replyList[i].replyContent + "</p>";
+						output += "<p>작성자 : " + replyList[i].replyer + "";
+						output += "(작성일 : " + replyList[i].createdTime + ")</p>";
+						output += "</div>";
+					}
+					document.getElementById("reply_list").innerHTML = output;
+					document.getElementById("replyContent").value = ""; //댓글 내용 초기화
+					
+				},
+				error : function(){
+					console.log("댓글 등록 실패");
+				}
+			});
 		}
-	}
-</script>
+	</script>
+<jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>

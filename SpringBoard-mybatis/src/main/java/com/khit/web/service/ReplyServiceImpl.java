@@ -24,5 +24,21 @@ public class ReplyServiceImpl implements ReplyService{
 	public List<ReplyDTO> getReplyList(Long boardId) {
 		return replyMapper.getReplyList(boardId);
 	}
+	// 댓글삭제
+	@Override
+	public void delete(Long id) {
+		replyMapper.delete(id);
+	}
+	// 댓글 내용 가져오기
+	@Override
+	public ReplyDTO findById(Long id) {
+		return replyMapper.findById(id);
+	}
+	// 댓글 수정처리(업데이트)
+	@Override
+	public void update(ReplyDTO replyDTO) {
+		replyMapper.update(replyDTO);
+		
+	}
 
 }

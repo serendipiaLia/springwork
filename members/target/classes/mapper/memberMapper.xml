@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+ <mapper namespace="Member"> <!-- com.khit.members.mapper.memberMapper -->
+ 	<!-- select은 항상 resultType필요  -->
+ 
+ 	<!-- 회원가입 처리 -->
+ 	<insert id="insert">
+ 		insert into t_member(email, password, name, age) values(#{email}, #{password}, #{name}, #{age})
+ 	</insert>
+ 	
+ 	<!-- 로그인 처리 -->
+ 	<!-- resultType은 mybatis-config.xml에서 설정해준 alias(별칭)사용 -->
+ 	<select id="login" resultType="member"> <!-- resultType="com.khit.members.dto.MemberDTO" -->
+ 		select * from t_member where email = #{email} and password = #{password}
+ 	</select>
+ 	
+ 	<!-- 회원정보 처리 -->
+ 	<select id="findAll" resultType="member">
+ 		select * from t_member
+ 	</select>
+	 	
+	 <!-- 회원 상세보기 -->
+	 <select id="findById" resultType="member">
+	 	select * from t_member where id = #{id}
+	 </select>
+	 
+	 <!-- 회원 삭제하기 -->
+	 <delete id="delete">
+	 	delete * from t_member where id = #{id}
+	 </delete>
+	 
+	 <!-- 회원 정보 수정 페이지 - 세션발급  -->
+	 <select id="findByEmail" resultType="member">
+	 	select * from t_member where email = #{email}
+	 </select>
+	 
+	 <!--회원정보 수정 처리 -->
+	 <update id="update">
+	 	update t_member set password = #{password}, name = #{name}, age = #{age} where id = #{id};
+	 </update>
+ </mapper>

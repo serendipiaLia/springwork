@@ -15,4 +15,22 @@
 		  select * from reply where boardid = #{boardId}		
   	</select>	
   	
+  	<!-- 댓글 삭제 -->
+	<delete id="delete">
+		delete from reply where id = #{id}
+	</delete>
+	
+	<!-- 댓글 수정 - 댓글 내용 가져오기 -->
+	<select id="findById" resultType="com.khit.web.dto.ReplyDTO">
+		select * from reply where id = #{id}
+	</select>
+
+	<!-- 댓글 수정 - 처리 -->
+	<update id="update">
+		update reply 
+		set replycontent = #{replyContent},
+			updatedtime = now()
+		where id = #{id}
+	</update>
+	
   </mapper>
